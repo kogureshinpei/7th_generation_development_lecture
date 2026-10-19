@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会の一覧 | もくもく会ボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<!-- ここから partials/header.php が出す部分（モックアップではリンク先を mockup 内に変え、select の onchange を外している） -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="index.html" class="site-title">もくもく会ボード</a>
+    <div class="site-header__actions">
+      <form method="post" class="user-switch">
+        <label>操作ユーザー
+          <select name="switch_user_id">
+            <option value="1" selected>あおい</option>
+            <option value="2">けんた</option>
+            <option value="3">さくら</option>
+            <option value="4">はると</option>
+            <option value="5">みお</option>
+          </select>
+        </label>
+        <noscript><button type="submit" class="btn">切替</button></noscript>
+      </form>
+      <a href="new.html" class="btn btn--primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>会をつくる
+      </a>
+    </div>
+  </div>
+</header>
+<main class="container">
+<!-- ここまで header.php -->
+
+<h1 class="page-title">これから開かれる会</h1>
+
+<!-- 開催日時が近い順。日付は見本（実際は db/init.sql が起動日からの相対で入れる）。終わった会（Git 入門ハンズオン）は出さない -->
+<ul class="event-list">
+  <li>
+    <a class="event-card" href="detail.html">
+      <div class="event-card__head">
+        <h2 class="event-card__title">PHP もくもく会</h2>
+      </div>
+      <dl class="meta-list">
+        <div class="meta-row"><dt>日時</dt><dd>2026/10/21（水）19:00</dd></div>
+        <div class="meta-row"><dt>場所</dt><dd>ラウンジ A</dd></div>
+        <div class="meta-row"><dt>主催</dt><dd>あおい</dd></div>
+      </dl>
+      <p class="event-card__count">参加 <strong>2 / 6</strong> 人</p>
+    </a>
+  </li>
+  <li>
+    <a class="event-card" href="detail.html">
+      <div class="event-card__head">
+        <h2 class="event-card__title">SQL 演習会</h2>
+        <!-- 参加人数 >= 定員 のときだけ出す -->
+        <span class="badge badge--full">満員</span>
+      </div>
+      <dl class="meta-list">
+        <div class="meta-row"><dt>日時</dt><dd>2026/10/23（金）20:00</dd></div>
+        <div class="meta-row"><dt>場所</dt><dd>オンライン（Discord）</dd></div>
+        <div class="meta-row"><dt>主催</dt><dd>けんた</dd></div>
+      </dl>
+      <p class="event-card__count">参加 <strong>3 / 3</strong> 人</p>
+    </a>
+  </li>
+  <li>
+    <a class="event-card" href="detail.html">
+      <div class="event-card__head">
+        <h2 class="event-card__title">秋ハ アイデア出し</h2>
+      </div>
+      <dl class="meta-list">
+        <div class="meta-row"><dt>日時</dt><dd>2026/10/26（月）18:30</dd></div>
+        <div class="meta-row"><dt>場所</dt><dd>会議室 3</dd></div>
+        <div class="meta-row"><dt>主催</dt><dd>さくら</dd></div>
+      </dl>
+      <p class="event-card__count">参加 <strong>1 / 10</strong> 人</p>
+    </a>
+  </li>
+</ul>
+
+<aside class="mock-note">
+  <p class="mock-note__title">見本：会が 1 件もないとき</p>
+  <p class="mock-note__text">event-list の代わりに、次の 1 行を出します。</p>
+  <p class="empty">これから開かれる会はありません</p>
+</aside>
+
+<!-- ここから partials/footer.php -->
+</main>
+<script src="/assets/main.js"></script>
+</body>
+</html>
