@@ -18,6 +18,15 @@ docker compose up -d
 
 ブラウザで **http://localhost:8080/check.php** を開き、大きく「**準備OK**」と表示されれば完了です。
 
+| URL | 中身 |
+|---|---|
+| http://localhost:8080/ | アプリ本体 |
+| http://localhost:8080/mockup/index.html | モックアップ |
+| http://localhost:8081/ | phpMyAdmin（DB の中身を見る。**見るだけ**） |
+
+> phpMyAdmin は SELECT しかできないユーザーでログインしています。画面に「Edit」「Delete」ボタンは出ますが、押してもエラーになります。
+> データを変えるのはアプリ（PHP）から。DB を直接いじると「アプリでは起きないはずのデータ」ができてしまうためです。
+
 > 初回は Docker イメージのダウンロードとデータベースの準備で 1〜3 分かかります。
 > 「まだ準備できていません」と出たら、少し待って再読み込みしてください。
 
@@ -50,21 +59,22 @@ docker compose down -v   # 止めてデータも消す（次の up で初期デ�
 
 | 症状 | 対処 |
 |---|---|
-| `port is already allocated`（8080 や 3307） | 他のアプリがそのポートを使っています。そのアプリを止めるか、`docker-compose.yml` の `"8080:80"` を `"8081:80"` のように左側だけ変えて、http://localhost:8081/check.php を開く |
+| `port is already allocated`（8080 や 3307） | 他のアプリがそのポートを使っています。そのアプリを止めるか、`docker-compose.yml` の `"8080:80"` を `"8090:80"` のように左側だけ変えて、http://localhost:8090/check.php を開く |
 | `Cannot connect to the Docker daemon` | Docker Desktop が起動していません。起動してからもう一度 `docker compose up -d` |
 | check.php で「DB 接続」が NG | DB の起動中です。30 秒ほど待って再読み込み。直らなければ `docker compose logs db` でエラーを確認 |
 | `db/init.sql` を書き換えたのに反映されない | init.sql は **DB を初めて作るときだけ** 実行されます。`docker compose down -v` → `docker compose up -d` で作り直す |
 | 画面が真っ白・エラーが出る | `docker compose logs web` で PHP のエラーを確認 |
-| DB の中身を直接見たい | `docker compose exec db mysql -umokumoku -pmokumoku mokumoku`（または TablePlus などで `127.0.0.1:3307` / ユーザー `mokumoku` / パスワード `mokumoku`） |
+| DB の中身を見たい | http://localhost:8081/ の phpMyAdmin で、左の `mokumoku` → テーブル名を押す。SQL を打って確かめるなら上の「SQL」タブ（SELECT だけ実行できる） |
 
 ## フォルダ構成
 
 ```
 .
-├── docker-compose.yml   … Web サーバと DB をまとめて起動する設定
+├── docker-compose.yml   … Web サーバ・DB・phpMyAdmin をまとめて起動する設定
 ├── Dockerfile           … PHP + Apache の環境（PDO MySQL を有効化）
 ├── db/
-│   └── init.sql         … テーブル作成と初期データ
+│   ├── init.sql         … テーブル作成と初期データ
+│   └── viewer.sql       … phpMyAdmin 用の「見るだけ」ユーザー
 ├── docs/
 │   ├── requirements.md  … 要件定義書
 │   └── mockup/          … モックアップ（http://localhost:8080/mockup/）
