@@ -1,0 +1,593 @@
+/*
+  もくもく会ボード 全体の見た目
+  - クラス名は BEM 風：部品名（event-card）、部品の中の要素（event-card__title）、見た目の違い（btn--primary）
+  - 色や角丸は下の :root にまとめてある。色を変えたいときはここだけ直す
+  - 各画面の HTML の見本は docs/mockup/ にある
+*/
+
+/* ========== 色・大きさの変数 ========== */
+:root {
+  --color-bg: #f6f4ef;          /* ページの背景 */
+  --color-surface: #ffffff;     /* カード・フォームの背景 */
+  --color-text: #2a2926;        /* 本文の文字 */
+  --color-text-sub: #6b675f;    /* 補足の文字（日時・場所など） */
+  --color-border: #e2ded5;      /* 枠線 */
+  --color-primary: #2f6b5a;     /* メインの色（ボタン・リンク） */
+  --color-primary-dark: #24584a;
+  --color-primary-light: #e6f0ec;
+  --color-danger: #b4372b;      /* エラー・満員 */
+  --color-danger-light: #fbecea;
+  --color-ok: #2f7d4a;          /* 環境チェックの OK */
+  --color-note: #8a6d1f;        /* モックアップの注記 */
+  --color-note-bg: #fdf6e3;
+
+  --radius: 10px;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.04);
+  --font: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+}
+
+/* ========== 土台 ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+/* ========== ヘッダー（partials/header.php） ========== */
+.site-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 12px 16px;
+}
+
+.site-title {
+  color: var(--color-text);
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-header__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 操作ユーザーの切り替え */
+.user-switch label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-sub);
+  font-size: 14px;
+}
+
+.user-switch select {
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+/* ========== ボタン ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: var(--color-bg);
+}
+
+/* メインの操作（会をつくる・参加する） */
+.btn--primary {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+}
+
+/* 取り消しの操作（キャンセルする） */
+.btn--danger {
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+
+.btn--danger:hover {
+  background: var(--color-danger-light);
+}
+
+/* 大きいボタン（詳細ページの参加ボタン） */
+.btn--large {
+  min-width: 200px;
+  padding: 12px 28px;
+  font-size: 17px;
+}
+
+/* 押せないボタン（満員です） */
+.btn:disabled {
+  border-color: var(--color-border);
+  background: var(--color-border);
+  color: var(--color-text-sub);
+  cursor: not-allowed;
+}
+
+/* ========== ページの枠 ========== */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+/* 1 列で読む画面（会をつくる・詳細） */
+.container--narrow {
+  max-width: 680px;
+}
+
+.page-title {
+  margin-bottom: 24px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* 「一覧へ戻る」リンク */
+.back-link {
+  display: inline-block;
+  margin-bottom: 16px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* 0 件・見つからないときのメッセージ */
+.empty {
+  padding: 48px 16px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  color: var(--color-text-sub);
+  text-align: center;
+}
+
+/* ========== 日時・場所などの行（一覧と詳細で共通） ========== */
+.meta-list {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+}
+
+.meta-row {
+  display: flex;
+  gap: 12px;
+}
+
+.meta-row dt {
+  flex-shrink: 0;
+  width: 4.5em;
+  color: var(--color-text-sub);
+  font-size: 14px;
+  line-height: 1.7rem;
+}
+
+.meta-row dd {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ========== ① 一覧：会のカード ========== */
+.event-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* カード全体がリンク */
+.event-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  padding: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.event-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.event-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-card__title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+/* 参加人数 / 定員 */
+.event-card__count {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-sub);
+  font-size: 14px;
+}
+
+.event-card__count strong {
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+/* ========== バッジ ========== */
+.badge {
+  display: inline-block;
+  flex-shrink: 0;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* 満員 */
+.badge--full {
+  background: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+/* ========== ② 会をつくる：フォーム ========== */
+.form {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-weight: 700;
+}
+
+/* 「必須」の目印 */
+.label__required {
+  margin-left: 6px;
+  color: var(--color-danger);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font: inherit;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--color-primary);
+  outline: 2px solid var(--color-primary-light);
+}
+
+/* 数字だけの短い入力（定員） */
+.input--short {
+  max-width: 8em;
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* 入力のヒント（〜文字以内など） */
+.field-hint {
+  color: var(--color-text-sub);
+  font-size: 13px;
+}
+
+/* エラーがある項目：form-field に form-field--error を足す */
+.form-field--error .input,
+.form-field--error .textarea {
+  border-color: var(--color-danger);
+  background: var(--color-danger-light);
+}
+
+.field-error {
+  color: var(--color-danger);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+/* ========== ③ 会の詳細・参加 ========== */
+.event-detail {
+  display: grid;
+  gap: 24px;
+  padding: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  box-shadow: var(--shadow);
+}
+
+.event-detail__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.event-detail__title {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.event-detail__description {
+  white-space: pre-wrap;  /* 説明の改行をそのまま出す */
+  overflow-wrap: anywhere;
+}
+
+/* 見出し（説明・参加者） */
+.section-title {
+  margin-bottom: 8px;
+  color: var(--color-text-sub);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* 参加者の名前の一覧 */
+.participant-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.participant-list__item {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--color-bg);
+  font-size: 15px;
+}
+
+/* 操作ユーザー本人 */
+.participant-list__item--me {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* 参加者が 0 人のとき */
+.participant-list__empty {
+  color: var(--color-text-sub);
+  font-size: 15px;
+}
+
+/* 参加ボタンを置く場所 */
+.join-area {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.join-area form {
+  margin: 0;
+}
+
+/* ボタンの代わりに出す文（あなたが主催する会です など） */
+.status-message {
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* ボタンの下の小さな補足（参加済みです など） */
+.join-area__note {
+  color: var(--color-text-sub);
+  font-size: 14px;
+}
+
+/* ========== 環境チェック（check.php） ========== */
+.check-table {
+  width: 100%;
+  margin: 16px 0 24px;
+  border-collapse: collapse;
+  background: var(--color-surface);
+}
+
+.check-table th,
+.check-table td {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border);
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.check-table th {
+  width: 40%;
+  font-weight: 500;
+}
+
+.ok {
+  color: var(--color-ok);
+  font-weight: 700;
+}
+
+.ng {
+  color: var(--color-danger);
+  font-weight: 700;
+}
+
+.check-result {
+  margin-bottom: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.check-result--ok {
+  color: var(--color-ok);
+}
+
+.check-result--ng {
+  color: var(--color-danger);
+}
+
+/* ========== モックアップ専用（アプリ本体では使わない） ========== */
+.mock-note {
+  margin-top: 48px;
+  padding: 20px;
+  border: 2px dashed var(--color-note);
+  border-radius: var(--radius);
+  background: var(--color-note-bg);
+}
+
+.mock-note__title {
+  margin-bottom: 4px;
+  color: var(--color-note);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.mock-note__text {
+  margin-bottom: 16px;
+  color: var(--color-note);
+  font-size: 14px;
+}
+
+.mock-note__grid {
+  display: grid;
+  margin-bottom: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.mock-note__label {
+  margin-bottom: 4px;
+  color: var(--color-note);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* ========== スマホ幅 ========== */
+@media (max-width: 480px) {
+  .container {
+    padding-top: 20px;
+  }
+
+  .page-title,
+  .event-detail__title {
+    font-size: 21px;
+  }
+
+  .form,
+  .event-detail {
+    padding: 18px;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+
+  .btn--large {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .join-area form {
+    width: 100%;
+  }
+}

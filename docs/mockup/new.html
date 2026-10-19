@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>会をつくる | もくもく会ボード</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+<!-- ここから partials/header.php が出す部分（モックアップではリンク先を mockup 内に変え、select の onchange を外している） -->
+<header class="site-header">
+  <div class="site-header__inner">
+    <a href="index.html" class="site-title">もくもく会ボード</a>
+    <div class="site-header__actions">
+      <form method="post" class="user-switch">
+        <label>操作ユーザー
+          <select name="switch_user_id">
+            <option value="1" selected>あおい</option>
+            <option value="2">けんた</option>
+            <option value="3">さくら</option>
+            <option value="4">はると</option>
+            <option value="5">みお</option>
+          </select>
+        </label>
+        <noscript><button type="submit" class="btn">切替</button></noscript>
+      </form>
+      <a href="new.html" class="btn btn--primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>会をつくる
+      </a>
+    </div>
+  </div>
+</header>
+<main class="container container--narrow">
+<!-- ここまで header.php（$narrow = true なので container--narrow が付く） -->
+
+<a class="back-link" href="index.html">← 一覧へ戻る</a>
+<h1 class="page-title">会をつくる</h1>
+
+<!-- 主催者は、いま操作しているユーザー（フォームには入れない） -->
+<form class="form" method="post" action="detail.html">
+  <div class="form-field">
+    <label class="label" for="title">タイトル<span class="label__required">必須</span></label>
+    <input class="input" type="text" id="title" name="title" maxlength="100" placeholder="例：PHP もくもく会">
+    <p class="field-hint">100 文字以内</p>
+  </div>
+
+  <div class="form-field">
+    <label class="label" for="starts_at">開催日時<span class="label__required">必須</span></label>
+    <input class="input" type="datetime-local" id="starts_at" name="starts_at">
+    <p class="field-hint">今より後の日時</p>
+  </div>
+
+  <div class="form-field">
+    <label class="label" for="place">場所<span class="label__required">必須</span></label>
+    <input class="input" type="text" id="place" name="place" maxlength="100" placeholder="例：ラウンジ A／オンライン（Discord）">
+    <p class="field-hint">100 文字以内</p>
+  </div>
+
+  <div class="form-field">
+    <label class="label" for="capacity">定員<span class="label__required">必須</span></label>
+    <input class="input input--short" type="number" id="capacity" name="capacity" min="1" max="50" placeholder="6">
+    <p class="field-hint">1〜50 人</p>
+  </div>
+
+  <div class="form-field">
+    <label class="label" for="description">説明<span class="label__required">必須</span></label>
+    <textarea class="textarea" id="description" name="description" placeholder="何をする会か、持ち物など"></textarea>
+  </div>
+
+  <div class="form-actions">
+    <a class="btn" href="index.html">やめる</a>
+    <button class="btn btn--primary" type="submit">会をつくる</button>
+  </div>
+</form>
+
+<aside class="mock-note">
+  <p class="mock-note__title">見本：エラー時</p>
+  <p class="mock-note__text">エラーのある項目は form-field に form-field--error を足し、入力欄のすぐ下に field-error を出します。入力した内容は value に戻して消さないこと。</p>
+  <div class="form">
+    <div class="form-field form-field--error">
+      <label class="label" for="mock_title">タイトル<span class="label__required">必須</span></label>
+      <input class="input" type="text" id="mock_title" name="title" maxlength="100" value="">
+      <p class="field-error">タイトルを入力してください</p>
+    </div>
+
+    <div class="form-field form-field--error">
+      <label class="label" for="mock_capacity">定員<span class="label__required">必須</span></label>
+      <input class="input input--short" type="number" id="mock_capacity" name="capacity" min="1" max="50" value="51">
+      <p class="field-error">定員は 1〜50 の整数で入力してください</p>
+    </div>
+  </div>
+</aside>
+
+<!-- ここから partials/footer.php -->
+</main>
+<script src="/assets/main.js"></script>
+</body>
+</html>
