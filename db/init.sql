@@ -45,10 +45,13 @@ INSERT INTO events (organizer_id, title, description, place, starts_at, capacity
   (3, '秋ハ アイデア出し', 'ハッカソンで作りたいものを持ち寄って話します。手ぶらで OK。', '会議室 3',
      TIMESTAMP(CURDATE() + INTERVAL 7 DAY, '18:30:00'), 10),
   (4, 'Git 入門ハンズオン', 'ブランチ・コミット・プルリクエストを手を動かして覚えます。', 'ラウンジ B',
-     TIMESTAMP(CURDATE() - INTERVAL 3 DAY, '19:00:00'), 8);
+     TIMESTAMP(CURDATE() - INTERVAL 3 DAY, '19:00:00'), 8),
+  (5, 'LP 模写会', '好きなサイトを 1 つ選んで、HTML/CSS で再現してみます。', 'ラウンジ A',
+     TIMESTAMP(CURDATE() + INTERVAL 14 DAY, '19:30:00'), 5);
 
+-- 主催者は参加者に含めない。LP 模写会は参加者 0 人
 INSERT INTO participants (event_id, user_id) VALUES
-  (1, 1), (1, 3),
-  (2, 2), (2, 3), (2, 5),   -- SQL 演習会は定員 3 で満員
-  (3, 3),
-  (4, 1), (4, 2), (4, 4);
+  (1, 3), (1, 5),
+  (2, 1), (2, 3), (2, 5),   -- SQL 演習会は定員 3 で満員
+  (3, 4),
+  (4, 1), (4, 2), (4, 5);
