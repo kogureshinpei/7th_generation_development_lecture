@@ -31,12 +31,26 @@ services:
       - db-data:/var/lib/mysql
       # 初回起動時（volume が空のとき）だけ実行される
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/viewer.sql:/docker-entrypoint-initdb.d/viewer.sql
     healthcheck:
       # 初期データの投入が終わるまで web を待たせる
       test: ["CMD", "mysql", "-h127.0.0.1", "-umokumoku", "-pmokumoku", "mokumoku", "-e", "SELECT 1 FROM participants LIMIT 1"]
       interval: 3s
       timeout: 3s
       retries: 30
+
+  # DB の中身をブラウザで見る（http://localhost:8081）。見るだけのユーザーで自動ログインする
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: viewer
+      PMA_PASSWORD: viewer
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   db-data:
