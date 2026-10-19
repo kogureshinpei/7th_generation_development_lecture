@@ -1,0 +1,42 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      # モックアップを http://localhost:8080/mockup/ で見られるようにする
+      - ./docs/mockup:/var/www/html/mockup:ro
+    environment:
+      DB_HOST: db
+      DB_NAME: mokumoku
+      DB_USER: mokumoku
+      DB_PASSWORD: mokumoku
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mokumoku
+      MYSQL_USER: mokumoku
+      MYSQL_PASSWORD: mokumoku
+      TZ: Asia/Tokyo
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - db-data:/var/lib/mysql
+      # 初回起動時（volume が空のとき）だけ実行される
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # 初期データの投入が終わるまで web を待たせる
+      test: ["CMD", "mysql", "-h127.0.0.1", "-umokumoku", "-pmokumoku", "mokumoku", "-e", "SELECT 1 FROM participants LIMIT 1"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  db-data:
