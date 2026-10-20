@@ -49,7 +49,7 @@ INSERT INTO events (organizer_id, title, description, place, starts_at, capacity
   (5, 'LP 模写会', '好きなサイトを 1 つ選んで、HTML/CSS で再現してみます。', 'ラウンジ A',
      TIMESTAMP(CURDATE() + INTERVAL 14 DAY, '19:30:00'), 5);
 
--- 主催者は参加者に含めない。LP 模写会は参加者 0 人
+-- LP 模写会（id=5）は participants に行がない
 INSERT INTO participants (event_id, user_id) VALUES
   (1, 3), (1, 5),
   (2, 1), (2, 3), (2, 5),   -- SQL 演習会は定員 3 で満員

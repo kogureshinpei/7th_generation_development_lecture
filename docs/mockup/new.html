@@ -39,7 +39,7 @@
 <h1 class="page-title">会をつくる</h1>
 
 <!-- 主催者は、いま操作しているユーザー（フォームには入れない） -->
-<form class="form" method="post" action="detail.html">
+<form class="form" method="post">
   <div class="form-field">
     <label class="label" for="title">タイトル<span class="label__required">必須</span></label>
     <input class="input" type="text" id="title" name="title" maxlength="100" placeholder="例：PHP もくもく会">
@@ -49,7 +49,6 @@
   <div class="form-field">
     <label class="label" for="starts_at">開催日時<span class="label__required">必須</span></label>
     <input class="input" type="datetime-local" id="starts_at" name="starts_at">
-    <p class="field-hint">今より後の日時</p>
   </div>
 
   <div class="form-field">

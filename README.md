@@ -46,6 +46,7 @@ docker compose down -v   # 止めてデータも消す（次の up で初期デ�
 | Cさん | ③ 会の詳細・参加 | `src/detail.php` | `feature/detail` |
 
 1. **全員で**：モックアップと要件定義書を読み、各画面で「画面・PHP・SQL のそれぞれで何が必要か」を書き出す
+   続けて、画面と画面がつながるところで決めておくことを話し合い、`docs/team-rules.md` に書く
 2. **各自**：自分のブランチを切る（`git switch -c feature/index` など）
 3. **各自**：AI に要件定義書の該当部分とモックアップの HTML を渡して実装する。受け入れ条件を 1 つずつ自分で確かめる
 4. **各自**：コミット → `git push -u origin feature/index` → GitHub で `main` 向けのプルリクエストを作る
@@ -77,6 +78,7 @@ docker compose down -v   # 止めてデータも消す（次の up で初期デ�
 │   └── viewer.sql       … phpMyAdmin 用の「見るだけ」ユーザー
 ├── docs/
 │   ├── requirements.md  … 要件定義書
+│   ├── team-rules.md    … チームの取り決め（チームで書く）
 │   └── mockup/          … モックアップ（http://localhost:8080/mockup/）
 └── src/                 … ここがそのまま http://localhost:8080/ になる
     ├── check.php        … 環境確認ページ
@@ -84,7 +86,7 @@ docker compose down -v   # 止めてデータも消す（次の up で初期デ�
     ├── new.php          … ② 会をつくる      ← Bさん
     ├── detail.php       … ③ 会の詳細・参加  ← Cさん
     ├── lib/
-    │   ├── db.php           … DB 接続 db()、エスケープ h()、日時の表示 format_datetime()
+    │   ├── db.php           … DB 接続 db()、エスケープ h()、日時の表示 format_datetime()（チームで追加）
     │   └── current_user.php … 操作ユーザーの切替・取得 current_user()（ログインの代わり）
     ├── partials/
     │   ├── header.php   … 全ページ共通のヘッダー
