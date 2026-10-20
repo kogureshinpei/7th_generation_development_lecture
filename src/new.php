@@ -3,7 +3,7 @@
 // 仕様：docs/requirements.md の「② 会をつくる」／見た目：http://localhost:8080/mockup/new.html
 require_once __DIR__ . '/lib/current_user.php';
 
-// TODO: POST で送られてきたら、入力をチェックして events に保存し、detail.php へリダイレクトする（PHP・SQL）
+// TODO: POST で送られてきたら、入力をチェックして events に保存し、リダイレクトする（PHP・SQL）
 
 $pageTitle = '会をつくる';
 $narrow = true;

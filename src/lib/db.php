@@ -21,11 +21,3 @@ function h(?string $value): string
 {
     return htmlspecialchars($value ?? '', ENT_QUOTES, 'UTF-8');
 }
-
-// DATETIME の文字列を「2026/10/29（木）19:00」の形にする
-function format_datetime(string $datetime): string
-{
-    $time = new DateTimeImmutable($datetime);
-    $weekdays = ['日', '月', '火', '水', '木', '金', '土'];
-    return $time->format('Y/m/d') . '（' . $weekdays[(int) $time->format('w')] . '）' . $time->format('H:i');
-}
